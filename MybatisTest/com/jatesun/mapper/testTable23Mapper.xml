@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jatesun.dao.testTable23Mapper">
+  <resultMap id="BaseResultMap" type="com.jatesun.model.testTable23">
+    <id column="ABC" jdbcType="VARCHAR" property="abc" />
+    <result column="BCD" jdbcType="VARCHAR" property="bcd" />
+    <result column="CDE" jdbcType="VARCHAR" property="cde" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ABC, BCD, CDE
+  </sql>
+  <sql id="baseQueryConds">
+    select 
+    <include refid="Base_Column_List" />
+    from TESTTABLE23
+    <where>
+      <if test="bcd != null and bcd != """>
+        BCD = #{bcd,jdbcType=VARCHAR},
+      </if>
+      <if test="cde != null and cde != """>
+        CDE = #{cde,jdbcType=VARCHAR},
+      </if>
+    </where>
+    1 == 1
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TESTTABLE23
+    where ABC = #{abc,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from TESTTABLE23
+    where ABC = #{abc,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jatesun.model.testTable23">
+    insert into TESTTABLE23 (ABC, BCD, CDE
+      )
+    values (#{abc,jdbcType=VARCHAR}, #{bcd,jdbcType=VARCHAR}, #{cde,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jatesun.model.testTable23">
+    insert into TESTTABLE23
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="abc != null">
+        ABC,
+      </if>
+      <if test="bcd != null">
+        BCD,
+      </if>
+      <if test="cde != null">
+        CDE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="abc != null">
+        #{abc,jdbcType=VARCHAR},
+      </if>
+      <if test="bcd != null">
+        #{bcd,jdbcType=VARCHAR},
+      </if>
+      <if test="cde != null">
+        #{cde,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jatesun.model.testTable23">
+    update TESTTABLE23
+    <set>
+      <if test="bcd != null">
+        BCD = #{bcd,jdbcType=VARCHAR},
+      </if>
+      <if test="cde != null">
+        CDE = #{cde,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ABC = #{abc,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jatesun.model.testTable23">
+    update TESTTABLE23
+    set BCD = #{bcd,jdbcType=VARCHAR},
+      CDE = #{cde,jdbcType=VARCHAR}
+    where ABC = #{abc,jdbcType=VARCHAR}
+  </update>
+</mapper>
