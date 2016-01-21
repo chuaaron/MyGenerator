@@ -27,7 +27,7 @@ public class StartUp {
 			myBatisGenerator.generate(null);
 			System.out.println(warnings);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

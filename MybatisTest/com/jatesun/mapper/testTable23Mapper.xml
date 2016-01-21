@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jatesun.dao.testTable23Mapper">
+<mapper namespace="com.jatesun.dao.testTable23Dao">
   <resultMap id="BaseResultMap" type="com.jatesun.model.testTable23">
     <id column="ABC" jdbcType="VARCHAR" property="abc" />
     <result column="BCD" jdbcType="VARCHAR" property="bcd" />
@@ -9,20 +9,45 @@
   <sql id="Base_Column_List">
     ABC, BCD, CDE
   </sql>
+  <sql id="Base_Insert_Column_List">
+    #{item.abc,jdbcType=VARCHAR},#{item.bcd,jdbcType=VARCHAR},#{item.cde,jdbcType=VARCHAR}
+  </sql>
   <sql id="baseQueryConds">
     select 
     <include refid="Base_Column_List" />
     from TESTTABLE23
     <where>
-      <if test="bcd != null and bcd != """>
+      <if test="bcd != null and bcd != "">
         BCD = #{bcd,jdbcType=VARCHAR},
       </if>
-      <if test="cde != null and cde != """>
+      <if test="cde != null and cde != "">
         CDE = #{cde,jdbcType=VARCHAR},
       </if>
     </where>
-    1 == 1
   </sql>
+  <select id="getCondsCount" parameterType="map" resultType="int">
+    select count(1) from (<include refid="baseQueryConds"/>)
+  </select>
+  <select id="findPageAll" parameterType="map" resultMap="BaseResultMap">
+    selet * from (select a.*,rownum as rn from (<include refid="baseQueryConds"/> order by ABC)a where rownum &lt;= #{limit})A where A.rn &gt;= #{start}
+  </select>
+  <select id="selectAllByConds" parameterType="map" resultMap="BaseResultMap">
+    <include refid="baseQueryConds"/>
+  </select>
+  <insert id="batchInsert" parameterType="com.jatesun.model.testTable23">
+    insert into TESTTABLE23(<include refid="Base_Column_List"/>)
+    <foreach close=")" collection="list" index="index" item="item" open="(" separator="union all">
+      select <include refid="Base_Insert_Column_List"/> from dual
+    </foreach>
+  </insert>
+  <update id="batchUpdateByPrimaryKey" parameterType="java.util.List">
+    <foreach close="end;" collection="list" index="index" item="item" open="begin">
+      update TESTTABLE23
+      set BCD = #{item.bcd,jdbcType=VARCHAR},
+        CDE = #{item.cde,jdbcType=VARCHAR}
+      where ABC = #{item.abc,jdbcType=VARCHAR}
+    </foreach>
+  </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

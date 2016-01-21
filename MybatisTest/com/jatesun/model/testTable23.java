@@ -2,7 +2,7 @@ package com.jatesun.model;
 
 /**
 *@TableName TESTTABLE23
-*@Date 2016-01-15
+*@Date 2016-01-21
 */
 public class testTable23 {
     //对应表字段ABC

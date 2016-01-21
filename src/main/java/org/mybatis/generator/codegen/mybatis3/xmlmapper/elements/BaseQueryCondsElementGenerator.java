@@ -47,7 +47,7 @@ public class BaseQueryCondsElementGenerator extends AbstractXmlElementGenerator 
 			sb.append(introspectedColumn.getJavaProperty());
 			sb.append(" != null and "); //$NON-NLS-1$
 			sb.append(introspectedColumn.getJavaProperty());
-			sb.append(" != \"\"");
+			sb.append(" != \"");
 			isNotNullElement.addAttribute(new Attribute("test", sb.toString())); //$NON-NLS-1$
 			dynamicElement.addElement(isNotNullElement);
 

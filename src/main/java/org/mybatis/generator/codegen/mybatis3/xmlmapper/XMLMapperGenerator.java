@@ -25,17 +25,22 @@ import org.mybatis.generator.codegen.AbstractXmlGenerator;
 import org.mybatis.generator.codegen.XmlConstants;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.BaseColumnListElementGenerator;
+import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.BaseInsertColumnListElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.BaseQueryCondsElementGenerator;
+import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.BatchInsertElementGenerator;
+import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.BatchUpdateByPrimaryKeyElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.BlobColumnListElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.CountByExampleElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.DeleteByExampleElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.DeleteByPrimaryKeyElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.ExampleWhereClauseElementGenerator;
+import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.FindPageAllElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.GetCondsCountElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.InsertElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.InsertSelectiveElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.ResultMapWithBLOBsElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.ResultMapWithoutBLOBsElementGenerator;
+import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.SelectAllByCondsElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.SelectByExampleWithBLOBsElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.SelectByExampleWithoutBLOBsElementGenerator;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.SelectByPrimaryKeyElementGenerator;
@@ -72,11 +77,13 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
 		addExampleWhereClauseElement(answer);
 		addMyBatis3UpdateByExampleWhereClauseElement(answer);
 		addBaseColumnListElement(answer);
-		// TODO
-		 addGetCondsCount(answer);//添加分页查询总数
-		// addFindPageAll(answer);//添加分页查询方法
-		// addQueryByConds(answer);//添加根据条件查询返回的所有数据
+		addBaseInsertColumnListElement(answer);
 		addBaseQueryCondsElement(answer);
+		addGetCondsCount(answer);// 添加分页查询总数 TODO
+		addFindPageAll(answer);// 添加分页查询方法 TODO
+		addSelectAllByConds(answer);// 添加根据条件查询返回的所有数据 TODO
+		addBatchInsert(answer);// 添加批量插入方法 TODO
+		addBatchUpdateByPrimaryKey(answer);// 添加批量删除方法 TODO
 		addBlobColumnListElement(answer);
 		addSelectByExampleWithBLOBsElement(answer);
 		addSelectByExampleWithoutBLOBsElement(answer);
@@ -134,21 +141,55 @@ public class XMLMapperGenerator extends AbstractXmlGenerator {
 		}
 	}
 
+	protected void addBaseInsertColumnListElement(XmlElement parentElement) {
+		if (introspectedTable.getRules().generateBaseColumnList()) {
+			AbstractXmlElementGenerator elementGenerator = new BaseInsertColumnListElementGenerator();
+			initializeAndExecuteGenerator(elementGenerator, parentElement);
+		}
+	}
+
 	protected void addBaseQueryCondsElement(XmlElement parentElement) {
 		// if (introspectedTable.getRules().generateBaseQueryConds()) {
 		AbstractXmlElementGenerator elementGenerator = new BaseQueryCondsElementGenerator();
 		initializeAndExecuteGenerator(elementGenerator, parentElement);
 		// }
 	}
-	
-	protected void addGetCondsCount(XmlElement parentElement) {// TODO
+
+	protected void addGetCondsCount(XmlElement parentElement) {
 		// if (introspectedTable.getRules().generateBaseQueryConds()) {
 		AbstractXmlElementGenerator elementGenerator = new GetCondsCountElementGenerator();
 		initializeAndExecuteGenerator(elementGenerator, parentElement);
 		// }
 	}
-	
 
+	protected void addFindPageAll(XmlElement parentElement) {
+		// if (introspectedTable.getRules().generateBaseQueryConds()) {
+		AbstractXmlElementGenerator elementGenerator = new FindPageAllElementGenerator();
+		initializeAndExecuteGenerator(elementGenerator, parentElement);
+		// }
+	}
+
+	protected void addSelectAllByConds(XmlElement parentElement) {// TODO
+		// if (introspectedTable.getRules().generateBaseQueryConds()) {
+		AbstractXmlElementGenerator elementGenerator = new SelectAllByCondsElementGenerator();
+		initializeAndExecuteGenerator(elementGenerator, parentElement);
+		// }
+	}
+
+	protected void addBatchInsert(XmlElement parentElement) {// TODO
+		// if (introspectedTable.getRules().generateBaseQueryConds()) {
+		AbstractXmlElementGenerator elementGenerator = new BatchInsertElementGenerator();
+		initializeAndExecuteGenerator(elementGenerator, parentElement);
+		// }
+	}
+	
+	protected void addBatchUpdateByPrimaryKey(XmlElement parentElement) {// TODO
+		// if (introspectedTable.getRules().generateBaseQueryConds()) {
+		AbstractXmlElementGenerator elementGenerator = new BatchUpdateByPrimaryKeyElementGenerator();
+		initializeAndExecuteGenerator(elementGenerator, parentElement);
+		// }
+	}
+	
 	protected void addBlobColumnListElement(XmlElement parentElement) {
 		if (introspectedTable.getRules().generateBlobColumnList()) {
 			AbstractXmlElementGenerator elementGenerator = new BlobColumnListElementGenerator();
