@@ -17,10 +17,10 @@
     <include refid="Base_Column_List" />
     from TESTTABLE23
     <where>
-      <if test="bcd != null and bcd != "">
+      <if test="bcd != null and bcd != ''">
         BCD = #{bcd,jdbcType=VARCHAR},
       </if>
-      <if test="cde != null and cde != "">
+      <if test="cde != null and cde != ''">
         CDE = #{cde,jdbcType=VARCHAR},
       </if>
     </where>

@@ -24,7 +24,7 @@ public class FindPageAllElementGenerator extends AbstractXmlElementGenerator {
 		answer.addAttribute(new Attribute("resultMap", introspectedTable.getBaseResultMapId()));
 		// select <include refid="Base_Column_List"/> from AF72
 		StringBuilder sb = new StringBuilder();
-		sb.append("selet * from (select a.*,rownum as rn from (<include refid=\""
+		sb.append("select * from (select a.*,rownum as rn from (<include refid=\""
 				+ introspectedTable.getBaseQueryCondsId() + "\"/> order by "
 				+ introspectedTable.getPrimaryKeyColumns().get(0).getActualColumnName() + ")a "
 				+ "where rownum &lt;= #{limit})A where A.rn &gt;= #{start}");
