@@ -41,6 +41,11 @@ public class BaseQueryCondsElementGenerator extends AbstractXmlElementGenerator 
 
 		XmlElement dynamicElement = new XmlElement("where");
 		answer.addElement(dynamicElement);
+
+		sb.setLength(0);
+		sb.append("1=1");
+		answer.addElement(new TextElement(sb.toString()));
+		sb.setLength(0);
 		for (IntrospectedColumn introspectedColumn : introspectedTable.getNonPrimaryKeyColumns()) {
 			XmlElement isNotNullElement = new XmlElement("if");
 			sb.setLength(0);
@@ -52,10 +57,10 @@ public class BaseQueryCondsElementGenerator extends AbstractXmlElementGenerator 
 			dynamicElement.addElement(isNotNullElement);
 
 			sb.setLength(0);
+			sb.append("AND ");
 			sb.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
 			sb.append(" = "); //$NON-NLS-1$
 			sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn));
-			sb.append(',');
 
 			isNotNullElement.addElement(new TextElement(sb.toString()));
 		}
